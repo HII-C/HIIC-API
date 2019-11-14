@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Item Search</title>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $(document).ready(function(){
+    $.getJSON('http://ec2-52-10-29-181.us-west-2.compute.amazonaws.com/get_items', function(data) {
+      var i;
+      for(i = 0; i<data.length; i++) {
+        $("#itemTable").append("<tr><td>"+data[i]+"</td></tr>");
+      }
+    });
+    $("#itemInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#itemTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+
+<input id="itemInput" type="text" placeholder="Search..">
+
+<table>
+  <thead>
+  <tr>
+    <th>Items</th>
+  </tr>
+  </thead>
+  <tbody id="itemTable">
+  </tbody>
+</table>
+
+
+</body>
+</html>
