@@ -2,7 +2,8 @@ from argparse import ArgumentParser
 from flask import Flask,request,render_template
 from flask_restful import Api
 import json
-from search_item import search_item
+from get_items import get_items
+from get_associations import get_associations
 from flask_cors import CORS, cross_origin
 
 
@@ -39,9 +40,10 @@ def main():
     return render_template("home.html")
 
 #api.add_resource(get_mapppings, '/get_mappings', methods=['GET'])
-api.add_resource(search_item, '/get_items',
+api.add_resource(get_items, '/get_items',
                  methods=['GET'], resource_class_kwargs={"db_params": params})
-
+api.add_resource(get_associations, '/get_associations',
+                 methods=['GET'], resource_class_kwargs={"db_params": params})
 
 app.debug = True
 

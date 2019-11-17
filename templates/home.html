@@ -12,7 +12,7 @@
     $.getJSON('http://ec2-52-10-29-181.us-west-2.compute.amazonaws.com/get_items', function(data) {
       var i;
       for(i = 0; i<data.length; i++) {
-        $("#itemTable").append("<tr><td>"+data[i]+"</td></tr>");
+        $("#itemTable").append("<tr><td>"+data[i][0]+"</td><td>"+data[i][1]+"</td></tr>");
       }
     });
     $("#itemInput").on("keyup", function() {

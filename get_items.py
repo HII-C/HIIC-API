@@ -16,21 +16,10 @@ class get_items(Resource):
         try:
             conn = sql.connect(user=self.user_, host=self.host_, db=self.db_, passwd=self.pass_)
             cursor = conn.cursor()
-            query_row_string = """SELECT
-            DISTINCT
-            CASE WHEN LEFT(t1.item,1)='T'
-            THEN t4.DRUG
-            WHEN LEFT(t1.item,1)='O'
-            THEN t3.LABEL
-            ELSE t2.SHORT_TITLE END AS itemType
-            FROM APIv1.items t1
-            LEFT JOIN mimiciiiv14.D_ICD_DIAGNOSES t2 ON SUBSTRING(t1.item,3)  = t2.ICD9_CODE
-            LEFT JOIN mimiciiiv14.D_LABITEMS t3 ON SUBSTRING(t1.item,3)  = t3.ITEMID
-            LEFT JOIN mimiciiiv14.D_DRUGS t4 ON SUBSTRING(t1.item,3)  = t4.NDC
-            ;"""
+            query_row_string = """SELECT * from A_IDS;"""
             cursor.execute(query_row_string)
             row = cursor.fetchall()
             response = Response(json.dumps(row), status=200, mimetype='application/json')
             return response
         except:
-             return "failed"
+             return "query failed"
